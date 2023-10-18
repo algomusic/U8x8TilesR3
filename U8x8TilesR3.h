@@ -1,16 +1,17 @@
 /*
  * U8x8TilesR3.h
  *
- * This library writes to a OLED display board using u8x8 tiles. 
- * The 128 x 128 pixel display is treated as a grid of 16 x 16 tiles of 8 x 8 pixels.
- * It is designed to write to a 90 degree rotated display (with the top connecting pins on the right),
- * be very lightwight in memory and data transfer, and avoid interrupts.
- * It utilises the u8g2lib library by Oliver Kraus 2016, which must be included and setup in the main sketch.
- * It provides a limited set of functions to draw numbers, letters, symbols, dials, and indicator bars.
+ * This library writes to an OLED display board using u8x8 tiles. 
+ * A 128 x 128 pixel display is treated as a grid of 16 x 16 tiles of 8 x 8 pixels.
+ * The library is designed to write to a 90-degree rotated display (with the top connecting pins on the right), be very lightweight in memory and data transfer, and avoid interrupts.
  *
+ * It utilises the u8g2lib library by Oliver Kraus 2016, which must be included and set up in the main sketch.
+ *
+ * The library provides limited functions to draw numbers, letters, symbols, dials, and indicator bars.
+ * 
  * Written by Andrew R. Brown 2023
  *
- * Delveloped for use with the Arduino IDE and the SH1107 OLED display board, but may work with boards.
+ * Developed for use with the Arduino IDE and the SH1107 OLED display board, but may work with other boards.
  *
  * U8x8TilesR3.h is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  */
@@ -30,7 +31,7 @@ public:
     u8x8.drawTile(y-yOffset, xOffset-x, 1, numbers[n]);
   }
 
-  /* Draw a four-tile sized uppercase letter 
+  /* Draw a four-tile (2 x 2) sized uppercase letter 
   * starting at the specified tile location on the display 
   */
   void drawLetter4(int x, int y, int l) {
@@ -40,7 +41,7 @@ public:
     u8x8.drawTile(y-yOffset+1, xOffset-1-x, 1, letters4[l][3]);
   }
 
-  /* Draw a nine-tile circle at the specified location. */
+  /* Draw a nine-tile (3 x 3) circle at the specified location. */
   void drawCircle9(int x, int y) {
     u8x8.drawTile(y - yOffset, xOffset - x, 1, circle9[0]);
     u8x8.drawTile(y - yOffset, xOffset-1 - x, 1, circle9[1]);
@@ -53,7 +54,7 @@ public:
     u8x8.drawTile(y - yOffset+2, xOffset-2 - x, 1, circle9[8]);
   }
 
-  /* Draw a nine-tile dial at the specified location
+  /* Draw a nine-tile (3 x 3) dial at the specified location
   * displaying the value from 0 to 1024.
   */
   void drawDial9(int x, int y, int val) {  // val 0 - 1024
@@ -200,7 +201,7 @@ public:
     }
   }
 
-  /* Draw a five-tile high VU metre at the specified tile location */
+  /* Draw a five-tile (1 x 5) VU metre at the specified tile location */
   void drawVUBar5(int x, int y, int val) {  // val, 0 - 40
     if (val <= 8) {
       u8x8.drawTile(y - yOffset + 4, xOffset - x, 1, vuBars[val]);
