@@ -13,7 +13,7 @@
  *
  * Developed for use with the Arduino IDE and the SH1107 OLED display board, but may work with other boards.
  *
- * U8x8TilesR3.h is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ * U8x8TilesR3.h is licensed under Creative Commons Zero v1.0 Universal.
  */
 
 #ifndef U8X8TILESR3_H_
