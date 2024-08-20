@@ -15,7 +15,25 @@ void setup() {
   Serial.println("starting U8x8TilesR3 test");
 
   display.drawWord(0, 0, "Hello World", 11);
-  display.drawNumber(5, 3, 2);
+  // display.drawNumber(5, 3, 2);
+  // for (int i=0; i<8; i++) {
+  //   if (random(10) < 3) {
+  //     display.drawCircle4(i*2, 1);
+  //   } else if (random(10) < 3) {
+  //     display.drawCircle4_1(i*2, 1);
+  //   } else if (random(10) < 3) {
+  //     display.drawCircle4_2(i*2, 1);
+  //   } else display.drawCircle4_3(i*2, 1);
+  // }
+  for (int i=0; i<8; i++) {
+    if (random(10) < 3) {
+      display.drawCircle4(14, i*2);
+    } else if (random(10) < 3) {
+      display.drawCircle4_1(14, i*2);
+    } else if (random(10) < 3) {
+      display.drawCircle4_2(14, i*2);
+    } else display.drawCircle4_3(14, i*2);
+  }
   display.drawWord(4, 5, "Cat", 3);
   display.drawWordBar(4, 6, "Cat", 3);
   display.drawDial9(4, 8, 0);
