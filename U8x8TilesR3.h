@@ -41,6 +41,38 @@ public:
     u8x8.drawTile(y-yOffset+1, xOffset-1-x, 1, letters4[l][3]);
   }
 
+  /* Draw a four-tile (2 x 2) open circle at the specified location. */
+  void drawCircle4(int x, int y) {
+    u8x8.drawTile(y - yOffset, xOffset - x, 1, circle4[0]);
+    u8x8.drawTile(y - yOffset, xOffset-1 - x, 1, circle4[1]);
+    u8x8.drawTile(y - yOffset+1, xOffset - x, 1, circle4[2]);
+    u8x8.drawTile(y - yOffset+1, xOffset-1 - x, 1, circle4[3]);
+  }
+
+  /* Draw a four-tile (2 x 2) semi-open circle at the specified location. */
+  void drawCircle4_1(int x, int y) {
+    u8x8.drawTile(y - yOffset, xOffset - x, 1, circle4_1[0]);
+    u8x8.drawTile(y - yOffset, xOffset-1 - x, 1, circle4_1[1]);
+    u8x8.drawTile(y - yOffset+1, xOffset - x, 1, circle4_1[2]);
+    u8x8.drawTile(y - yOffset+1, xOffset-1 - x, 1, circle4_1[3]);
+  }
+
+   /* Draw a four-tile (2 x 2) semi-filled circle at the specified location. */
+  void drawCircle4_2(int x, int y) {
+    u8x8.drawTile(y - yOffset, xOffset - x, 1, circle4_2[0]);
+    u8x8.drawTile(y - yOffset, xOffset-1 - x, 1, circle4_2[1]);
+    u8x8.drawTile(y - yOffset+1, xOffset - x, 1, circle4_2[2]);
+    u8x8.drawTile(y - yOffset+1, xOffset-1 - x, 1, circle4_2[3]);
+  }
+
+   /* Draw a four-tile (2 x 2) filled circle at the specified location. */
+  void drawCircle4_3(int x, int y) {
+    u8x8.drawTile(y - yOffset, xOffset - x, 1, circle4_3[0]);
+    u8x8.drawTile(y - yOffset, xOffset-1 - x, 1, circle4_3[1]);
+    u8x8.drawTile(y - yOffset+1, xOffset - x, 1, circle4_3[2]);
+    u8x8.drawTile(y - yOffset+1, xOffset-1 - x, 1, circle4_3[3]);
+  }
+
   /* Draw a nine-tile (3 x 3) circle at the specified location. */
   void drawCircle9(int x, int y) {
     u8x8.drawTile(y - yOffset, xOffset - x, 1, circle9[0]);
@@ -350,7 +382,10 @@ public:
   uint8_t xOffset = 15; // negative
   uint8_t yOffset = 12;
   // 0,0 is top left corner
-
+  uint8_t circle4[4][8] = { { 0, 7, 24, 32, 32, 64, 64, 64 }, {  0, 224, 24, 4, 4, 2, 2, 2 }, { 64, 64, 64, 32, 32, 24, 7, 0 }, {2, 2, 2, 4, 4, 24, 224, 0 }};
+  uint8_t circle4_1[4][8] = { { 0, 7, 24, 34, 36, 72, 72, 72 }, { 0, 224, 24, 196, 36, 18, 18, 18 }, { 72, 72, 72, 36, 35, 24, 7, 0 }, {18, 18, 18, 36, 196, 24, 224, 0 }};
+  uint8_t circle4_2[4][8] = { { 0, 7, 24, 35, 36, 73, 74, 74 }, { 0, 224, 24, 196, 36, 146, 82, 82 }, { 74, 74, 73, 36, 35, 24, 7, 0 }, {82, 82, 146, 36, 196, 24, 224, 0 }};
+  uint8_t circle4_3[4][8] = { { 0, 7, 31, 63, 63, 127, 127, 127 }, { 0, 224, 248, 252, 252, 254, 254, 254 }, { 127, 127, 127, 63, 63, 31, 7, 0 }, {254, 254, 254, 252, 252, 248, 224, 0 }}; 
   uint8_t circle9[9][8] = { { 0, 0, 7, 4, 8, 16, 32, 32 }, { 0, 126, 129, 0, 0, 0, 0, 0 }, { 0, 0, 224, 32, 16, 8, 4, 4 }, { 32, 64, 64, 64, 64, 64, 64, 32 }, { 0, 0, 0, 24, 24, 16, 16, 16 }, { 4, 2, 2, 2, 2, 2, 2, 4 }, { 32, 32, 16, 8, 4, 3, 0, 0 }, { 16, 16, 16, 16, 16, 129, 126, 0 }, { 4, 4, 8, 16, 32, 192, 0, 0 } };
   uint8_t dial9_1[2][8] = { { 0, 0, 0, 24, 24, 16, 48, 48 }, { 112, 112, 112, 240, 240, 240, 126, 0 } };                                                                                   // 4, 7
   uint8_t dial9_2[4][8] = { { 32, 64, 64, 64, 64, 64, 64, 35 }, { 0, 0, 0, 24, 24, 48, 112, 240 }, { 63, 63, 31, 15, 7, 3, 0, 0 }, { 240, 240, 240, 240, 240, 241, 126, 0 } };             //3, 4, 6, 7
