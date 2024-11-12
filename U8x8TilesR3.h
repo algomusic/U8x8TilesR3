@@ -295,6 +295,11 @@ public:
     u8x8.drawTile(y-yOffset, xOffset-x, 1, symbols[2]);
   }
 
+  /* Draw a single-tile centered negative or minus at the specified tile location */
+  void drawNegative(int x, int y) {
+    u8x8.drawTile(y-yOffset, xOffset-x, 1, symbols[3]);
+  }
+
   /* Draw a single-tile dash at val height location the specified tile x y coords */
   void drawHeightMark(int x, int y, int val) { // 0 - 7
     u8x8.drawTile(y-yOffset, xOffset-x, 1, heightMarks[val]);
@@ -346,21 +351,65 @@ public:
     }
   }
 
-  /* Draw a 3-digit single-tile number (0 to 999) at the specified tile location */
+  /* Draw a 3-digit single-tile number (0 to 999) at the specified tile location 
+  * @val is the number, typically from 0-1023, to be displayed as a 3-digit number from 0-100
+  * If the number is negative, a dash is displayed in the first tile
+  */
   void draw100(int x, int y, int val) {
-    int n = val * 0.098;
-    if (n == 100) {
-      drawNumber(x, y, 1);
-      drawNumber(x+1, y, 0);
-      drawNumber(x+2, y, 0);
+    int n = max(-99.0f, min(100.0f, val * 0.098f));
+    if (n >= 100) {
+      drawNumber(x, y, floor(n/100));
+      drawNumber(x+1, y, floor((int)(n/10) % 10));
+      drawNumber(x+2, y, floor((int)n % 10));
     } else if (n > 9) {
       drawBlank(x, y);
       drawNumber(x+1, y, floor(n/10));
       drawNumber(x+2, y, n%10);
-    } else {
+    } else if (n >= 0) {
       drawBlank(x, y);
       drawBlank(x+1, y);
       drawNumber(x+2, y, n);
+    } else if (n > -10) {
+      drawBlank(x, y);
+      drawNegative(x+1, y);
+      drawNumber(x+2, y, abs(n));
+    } else if (n > -100) {
+      drawNegative(x, y);
+      drawNumber(x+1, y, floor((int)(abs(n)/10) % 10));
+      drawNumber(x+2, y, abs(n)%10);
+    } 
+  }
+
+  /* Draw a 3-digit single-tile number (.00 to .99) at the specified tile location 
+  * @val is the number from 0.00 - 0.99, to be displayed as a 2-decimal number
+  */
+  void draw1(int x, int y, float val) {
+    drawDot(x, y);
+    drawNumber(x+1, y, floor(val * 10));
+    drawNumber(x+2, y, floor((int)(val * 100) % 10));
+  }
+
+  /* Draw a 3-digit single-tile number (1.0 to 9.9) at the specified tile location 
+  * @val is the number from 1.0 - 9.9, to be displayed as a 1-decimal number
+  */
+  void draw10(int x, int y, float val) {
+    drawNumber(x, y, floor(val));
+    drawDot(x+1, y);
+    drawNumber(x+2, y, floor((int)(val * 10) % 10));
+  }
+
+  /* Draw a 3-digit single-tile number >= 1000 at the specified tile location 
+  * @val is the number from 1000-99999, to be displayed as a 3-digit number in the format 1K
+  */
+  void draw1000(int x, int y, int val) {
+    if (val >= 1000 && val < 10000) {
+      drawBlank(x, y);
+      drawNumber(x+1, y, floor(val/1000));
+      drawLetter(x+2, y, 10); // K
+    } else {
+      drawNumber(x, y, floor(val/10000));
+      drawNumber(x+1, y, floor((int)(val/1000) % 10));
+      drawLetter(x+2, y, 10); // K
     }
   }
 
@@ -427,7 +476,7 @@ public:
     {{0,96,96,96,96,120,30,7}, {0,6,6,6,6,30,120,224}, {1,1,1,1,1,1,1,1}, {128,128,128,128,128,128,128,128}}, // Y
     {{0,127,127,0,0,0,0,1}, {0,254,254,6,6,30,120,224}, {7,30,120,96,96,96,127,127}, {128,0,0,0,0,0,254,254}}, // Z
     {{0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}}}; // space
-  uint8_t symbols[3][8] = {{0, 0, 0, 0, 255, 0, 0, 0}, {0, 0, 0, 24, 24, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}};// dash, dot, blank
+  uint8_t symbols[4][8] = {{0, 0, 0, 0, 255, 0, 0, 0}, {0, 0, 0, 24, 24, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 126, 0, 0, 0}};// dash, dot, blank, negative
   uint8_t heightMarks[8][8] = {{0,0,0,0,0,0,0,126}, {0,0,0,0,0,0,126,0}, {0,0,0,0,0,126,0,0}, {0,0,0,0,126,0,0,0}, 
     {0,0,0,126,0,0,0,0}, {0,0,126,0,0,0,0,0}, {0,126,0,0,0,0,0,0}, {126,0,0,0,0,0,0,0}}; // hight marks
   uint8_t numbers[10][8] = {{0, 56, 68, 68, 68, 68, 56, 0}, {0, 48, 80, 16, 16, 16, 124, 0},
