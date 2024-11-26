@@ -259,7 +259,7 @@ public:
       u8x8.drawTile(y - yOffset + 2, xOffset - x, 1, vuBars[8]);
       u8x8.drawTile(y - yOffset + 1, xOffset - x, 1, vuBars[val - 24]);
       u8x8.drawTile(y - yOffset + 0, xOffset - x, 1, vuBars[0]);
-    } else if (val <= 40) {
+    } else {
       u8x8.drawTile(y - yOffset + 4, xOffset - x, 1, vuBars[8]);
       u8x8.drawTile(y - yOffset + 3, xOffset - x, 1, vuBars[8]);
       u8x8.drawTile(y - yOffset + 2, xOffset - x, 1, vuBars[8]);
