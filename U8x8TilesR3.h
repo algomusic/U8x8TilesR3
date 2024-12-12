@@ -351,12 +351,13 @@ public:
     }
   }
 
-  /* Draw a 3-digit single-tile number (0 to 999) at the specified tile location 
-  * @val is the number, typically from 0-1023, to be displayed as a 3-digit number from 0-100
-  * If the number is negative, a dash is displayed in the first tile
+  /* Draw a 3-digit single-tile number (-99 to 100) at the specified tile location 
+  * @val is the number, -100 to 100, to be displayed
+  * If the number is negative, -1 to -99, a dash is displayed in the first tile
   */
   void draw100(int x, int y, int val) {
-    int n = max(-99.0f, min(100.0f, val * 0.098f));
+    // int n = max(-99.0f, min(100.0f, val * 0.098f));
+    int n = val;
     if (n >= 100) {
       drawNumber(x, y, floor(n/100));
       drawNumber(x+1, y, floor((int)(n/10) % 10));
@@ -369,11 +370,11 @@ public:
       drawBlank(x, y);
       drawBlank(x+1, y);
       drawNumber(x+2, y, n);
-    } else if (n > -10) {
+    } else if (n >= -10) {
       drawBlank(x, y);
       drawNegative(x+1, y);
       drawNumber(x+2, y, abs(n));
-    } else if (n > -100) {
+    } else if (n >= -100) {
       drawNegative(x, y);
       drawNumber(x+1, y, floor((int)(abs(n)/10) % 10));
       drawNumber(x+2, y, abs(n)%10);
